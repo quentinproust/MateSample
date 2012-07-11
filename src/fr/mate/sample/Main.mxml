@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:viewsRecherche="fr.mate.sample.recherche.views.*"
+				xmlns:viewsSynthese="fr.mate.sample.synthese.views.*"
+				currentState="{fr.mate.sample.ApplicationStates.RECHERCHE}">
+
+	<mx:Tile direction="horizontal"
+			 horizontalGap="10"
+			 verticalGap="15"
+			 color="0x323232"
+			 paddingTop="10"
+			 paddingBottom="10"
+			 paddingLeft="10"
+			 paddingRight="10">
+
+		<mx:Button label="Recherche"
+				   click="{currentState=fr.mate.sample.ApplicationStates.RECHERCHE;}" />
+		<mx:Button label="Synthese"
+				   click="{currentState=fr.mate.sample.ApplicationStates.SYNTHESE;}" />
+		<!--<mx:Button label="Edition"
+				   height="50"
+				   width="75"
+				   click="clickHandler(event);" />
+		<mx:Button label="Validation"
+				   height="50"
+				   width="75"
+				   click="clickHandler(event);" />-->
+	</mx:Tile>
+
+	<mx:states>
+		<mx:State name="{fr.mate.sample.ApplicationStates.RECHERCHE}">
+			<mx:AddChild>
+				<viewsRecherche:recherche />
+			</mx:AddChild>
+		</mx:State>	
+		
+		<mx:State name="{fr.mate.sample.ApplicationStates.SYNTHESE}">
+			<mx:AddChild>
+				<viewsSynthese:synthese />
+			</mx:AddChild>
+		</mx:State>	
+	</mx:states>
+
+</mx:Application>
