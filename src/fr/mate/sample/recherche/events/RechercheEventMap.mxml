@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LocalEventMap xmlns:mx="http://www.adobe.com/2006/mxml"
+			   xmlns="http://mate.asfusion.com/"
+			   xmlns:services="fr.mate.sample.services.*">
+
+	<mx:Script>
+		<![CDATA[
+			import fr.mate.sample.recherche.manager.*;
+			import fr.mate.sample.recherche.model.*;
+			import fr.mate.sample.recherche.views.*;
+			import mx.events.*;
+		]]>
+	</mx:Script>
+
+	<!-- Debugger -->
+	<!-- remove during production. This tag can be placed here or in your main application -->
+
+	<Debugger level="{Debugger.ALL}" />
+
+	<!-- Services -->
+	<services:Services id="services" />
+
+	<!-- Intialisation -->
+	<EventHandlers type="{FlexEvent.PREINITIALIZE}">
+		<!-- Init du manager -->
+		<ObjectBuilder generator="{RechercheManager}"
+					   constructorArguments="{scope.dispatcher}" />
+
+		<!-- Init des views models -->
+		<ObjectBuilder generator="{RechercheVM}"
+					   constructorArguments="{scope.dispatcher}" />
+	</EventHandlers>
+
+	<!-- Recherche de personnes ou de contrats -->
+	<EventHandlers type="{RechercheEvent.GET}"
+				   debug="true">
+
+		<RemoteObjectInvoker instance="{services.rechercheService}"
+							 method="rechercher"
+							 arguments="{event.informationsRecherche}">
+
+			<resultHandlers>
+				<MethodInvoker generator="{RechercheManager}"
+							   method="loadResultatRecherche"
+							   arguments="{resultObject}" />
+			</resultHandlers>
+
+		</RemoteObjectInvoker>
+	</EventHandlers>
+
+	<!-- Injectors -->
+	<Injectors target="{RechercheUI}">
+		<PropertyInjector targetKey="viewModel"
+						  source="{RechercheVM}" />
+	</Injectors>
+
+</LocalEventMap>

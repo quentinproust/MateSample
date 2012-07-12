@@ -30,7 +30,7 @@
 	<mx:states>
 		<mx:State name="{fr.mate.sample.ApplicationStates.RECHERCHE}">
 			<mx:AddChild>
-				<viewsRecherche:recherche />
+				<viewsRecherche:RechercheUI />
 			</mx:AddChild>
 		</mx:State>	
 		

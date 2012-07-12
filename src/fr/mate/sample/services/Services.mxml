@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Object xmlns="http://mate.asfusion.com/"
+		   xmlns:mx="http://www.adobe.com/2006/mxml">
+
+	<MockRemoteObject id="rechercheService"
+					  showBusyCursor="true"
+					  delay="1"
+					  mockGenerator="{RechercherMockService}" />
+
+</mx:Object>

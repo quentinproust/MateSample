@@ -1,27 +1,32 @@
-package fr.mate.sample.model 
+package fr.mate.sample.model
 {
+	
 	/**
 	 * Contract.
 	 */
-	public class ContratVo 
+	[RemoteClass(alias="ContratVo")]
+	public class ContratVo
 	{
 		
 		/** Id. */
-		private var id:Number;
+		public var id:Number;
 		
 		/** Type du contrat. */
-		private var type:String;
+		public var type:String;
 		
 		/** Date d'ouverture du contrat. */
-		private var dateOuverture:Date;
+		public var dateOuverture:Date;
 		/** Date de cloture du contrat. Peut être null. */
-		private var dateCloture:Date;
-		
-		public function ContractVo() 
+		public var dateCloture:Date;
+				
+		public function ContratVo(id:Number = 0, type:String = null, dateOuverture:Date = null, dateCloture:Date = null)
 		{
-			
+			this.id = id;
+			this.type = type;
+			this.dateOuverture = dateOuverture;
+			this.dateCloture = dateCloture;
 		}
-		
+	
 	}
 
 }
