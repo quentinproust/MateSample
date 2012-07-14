@@ -52,6 +52,8 @@
   <!-- SWC Libraries -->
   <libraryPaths>
     <element path="lib\Mate_09_1.swc" />
+    <element path="datavisualization.swc" />
+    <element path="datavisualization_rb.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

@@ -4,7 +4,8 @@ package fr.mate.sample.model
 	/**
 	 * Personne.
 	 */
-	[RemoteClass(alias="PersonneVo")]
+	[RemoteClass(alias = "PersonneVo")]
+	[Bindable]
 	public class PersonneVo 
 	{
 		/** Id. */
@@ -37,6 +38,10 @@ package fr.mate.sample.model
 		 */
 		public function addContrat(contrat:ContratVo) : void {
 			contrats.addItem(contrat);
+		}
+		
+		public function get nombreContrats():Number {
+			return contrats.length;
 		}
 	}
 

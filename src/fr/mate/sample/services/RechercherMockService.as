@@ -4,6 +4,7 @@ package fr.mate.sample.services
 	import fr.mate.sample.model.PersonneVo;
 	import fr.mate.sample.recherche.model.*;
 	import mx.collections.ArrayCollection;
+	
 	/**
 	 * Un service simulant un appel à un service web avec BlazeDS.
 	 * Ce sample se concentre sur le framework Mate donc je ne souhaite pas couvrir les appels distants pour le moment.
@@ -63,7 +64,7 @@ package fr.mate.sample.services
 			
 			for each (var personne:PersonneVo in personnes) {
 				// On recherche les personnes.
-				if (personne.nomComplet.toLowerCase().indexOf(criteres.nomComplet) > 0) {
+				if (personne.nomComplet.toLowerCase().indexOf(criteres.nomComplet.toLowerCase()) > 0) {
 					personnesTrouvees.addItem(personne);
 				}
 			}

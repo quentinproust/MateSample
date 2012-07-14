@@ -2,43 +2,59 @@
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
 				xmlns:viewsRecherche="fr.mate.sample.recherche.views.*"
 				xmlns:viewsSynthese="fr.mate.sample.synthese.views.*"
-				currentState="{fr.mate.sample.ApplicationStates.RECHERCHE}">
+				xmlns:eventsRecherche="fr.mate.sample.recherche.events.*"
+				xmlns:app="fr.mate.sample.application.*"
+				currentState="{ApplicationStates.RECHERCHE}">
 
+	<mx:Script>
+		<![CDATA[
+		import fr.mate.sample.application.*;
+		]]>
+	</mx:Script>
+				
 	<mx:Tile direction="horizontal"
 			 horizontalGap="10"
-			 verticalGap="15"
-			 color="0x323232"
 			 paddingTop="10"
-			 paddingBottom="10"
-			 paddingLeft="10"
-			 paddingRight="10">
-
+			 paddingBottom="10" 
+			 width="100%">
 		<mx:Button label="Recherche"
-				   click="{currentState=fr.mate.sample.ApplicationStates.RECHERCHE;}" />
+				   click="{dispatchEvent(new ApplicationNavigationEvent(ApplicationStates.RECHERCHE));}" />
 		<mx:Button label="Synthese"
-				   click="{currentState=fr.mate.sample.ApplicationStates.SYNTHESE;}" />
+				   click="{dispatchEvent(new ApplicationNavigationEvent(ApplicationStates.SYNTHESE));}" />
 		<!--<mx:Button label="Edition"
-				   height="50"
-				   width="75"
-				   click="clickHandler(event);" />
-		<mx:Button label="Validation"
-				   height="50"
-				   width="75"
-				   click="clickHandler(event);" />-->
+			 height="50"
+			 width="75"
+			 click="clickHandler(event);" />-->
 	</mx:Tile>
 
 	<mx:states>
-		<mx:State name="{fr.mate.sample.ApplicationStates.RECHERCHE}">
+		<mx:State name="{ApplicationStates.RECHERCHE}">
 			<mx:AddChild>
 				<viewsRecherche:RechercheUI />
 			</mx:AddChild>
-		</mx:State>	
+		</mx:State>
+
+		<mx:State name="{ApplicationStates.LISTE_PERSONNES}">
+			<mx:AddChild>
+				<viewsRecherche:ListePersonneUI />
+			</mx:AddChild>
+		</mx:State>
 		
-		<mx:State name="{fr.mate.sample.ApplicationStates.SYNTHESE}">
+		<mx:State name="{ApplicationStates.LISTE_CONTRATS}">
+			<mx:AddChild>
+				<viewsRecherche:ListeContratUI />
+			</mx:AddChild>
+		</mx:State>
+
+		<!--<mx:State name="{fr.mate.sample.ApplicationStates.SYNTHESE}">
 			<mx:AddChild>
 				<viewsSynthese:synthese />
 			</mx:AddChild>
-		</mx:State>	
+		</mx:State>-->
 	</mx:states>
 
+	<!-- Event Maps -->
+	<app:NavigationMap />
+	
+	<eventsRecherche:RechercheEventMap dispatcher="{this}" />
 </mx:Application>

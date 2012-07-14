@@ -4,7 +4,8 @@ package fr.mate.sample.model
 	/**
 	 * Contract.
 	 */
-	[RemoteClass(alias="ContratVo")]
+	[RemoteClass(alias = "ContratVo")]
+	[Bindable]
 	public class ContratVo
 	{
 		

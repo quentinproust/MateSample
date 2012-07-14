@@ -12,15 +12,15 @@ package fr.mate.sample.recherche.events
 		
 		private var _informationsRecherche:CritereRecherche;
 		
-		public function get informationsRecherche():CritereRecherche {
-			return _informationsRecherche;
-		}
-		
 		public function RechercheEvent(informationsRecherche:CritereRecherche) 
 		{ 
 			super(GET);
 			this._informationsRecherche = informationsRecherche;
 		} 
+		
+		public function get informationsRecherche():CritereRecherche {
+			return _informationsRecherche;
+		}
 		
 		public override function clone():Event 
 		{ 

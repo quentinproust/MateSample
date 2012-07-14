@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
-		 xmlns:events="fr.mate.sample.recherche.events.*"
-		 xmlns:model="fr.mate.sample.recherche.model.*">
+		 xmlns:model="fr.mate.sample.recherche.model.*"
+		 width="100%">
 
 	<mx:Script>
 		<![CDATA[
@@ -37,11 +37,7 @@
 	</mx:Form>
 
 	<mx:HBox>
-
 		<mx:Button label="Rechercher" click="{viewModel.rechercher(rechercheEnCours);}" />
-
 	</mx:HBox>
 
-	<!-- Event Map -->
-	<events:RechercheEventMap dispatcher="{this}" />
 </mx:VBox>
