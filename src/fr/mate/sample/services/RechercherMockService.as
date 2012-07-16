@@ -38,7 +38,7 @@ package fr.mate.sample.services
 			// Personne Elizabeth Durand
 			var elizabeth:PersonneVo = new PersonneVo(1441, "Elizabeth Durand", new Date(1970, 01, 20));
 			elizabeth.addContrat(new ContratVo(1561, "Assurance VIP", new Date(1980, 01, 01), new Date(2000, 12, 31)));
-			elizabeth.addContrat(new ContratVo(1561, "Assurance Super VIP", new Date(2001, 01, 01)));
+			elizabeth.addContrat(new ContratVo(1562, "Assurance Super VIP", new Date(2001, 01, 01)));
 			personnes.addItem(elizabeth);
 		}
 		
