@@ -3,6 +3,7 @@ package fr.mate.sample.recherche.model
 	import flash.events.*;
 	import fr.mate.core.*;
 	import fr.mate.sample.model.*;
+	import fr.mate.sample.recherche.events.SelectionContratEvent;
 	import fr.mate.sample.recherche.events.SelectionPersonneEvent;
 	import mx.collections.*;
 	import mx.utils.*;
@@ -45,6 +46,15 @@ package fr.mate.sample.recherche.model
 			contrats.refresh();
 			
 			return contrats;
+		}
+		
+		/**
+		 * Sélection d'un contrat dans le but de voir les informations qui lui sont rattachées.
+		 * @param	contrat Contrat sélectionné.
+		 */
+		public function selectionnerContrat(contrat:ContratVo):void
+		{
+			dispatcher.dispatchEvent(new SelectionContratEvent(contrat));
 		}
 	}
 

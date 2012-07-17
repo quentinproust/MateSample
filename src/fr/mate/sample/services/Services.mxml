@@ -7,4 +7,9 @@
 					  delay="1"
 					  mockGenerator="{RechercherMockService}" />
 
+	<MockRemoteObject id="remboursementService"
+					  showBusyCursor="true"
+					  delay="1"
+					  mockGenerator="{RemboursementMockService}" />
+
 </mx:Object>

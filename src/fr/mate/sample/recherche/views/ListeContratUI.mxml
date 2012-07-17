@@ -7,6 +7,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import fr.mate.sample.model.*;
 			import fr.mate.sample.recherche.model.*;
 			import fr.mate.core.*;
 			
@@ -20,7 +21,8 @@
 	<mx:AdvancedDataGrid dataProvider="{viewModel.contrats}"
 						 width="100%"
 						 height="100%"
-						 sortExpertMode="true">
+						 sortExpertMode="true"
+						 id="grilleContrats">
 		<mx:columns>
 			<mx:AdvancedDataGridColumn headerText="Numéro contrat"
 									   dataField="id" />
@@ -35,4 +37,9 @@
 		</mx:columns>
 	</mx:AdvancedDataGrid>
 
+	<mx:HBox>
+		<mx:Button label="Voir les informations du contrat"
+				   enabled="{grilleContrats.selectedItem != null}"
+				   click="{viewModel.selectionnerContrat(ContratVo(grilleContrats.selectedItem));}" />
+	</mx:HBox>
 </mx:VBox>

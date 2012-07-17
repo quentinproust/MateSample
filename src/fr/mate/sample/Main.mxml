@@ -1,21 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
 				xmlns:viewsRecherche="fr.mate.sample.recherche.views.*"
-				xmlns:viewsSynthese="fr.mate.sample.synthese.views.*"
+				xmlns:viewsRemboursement="fr.mate.sample.remboursement.views.*"
 				xmlns:eventsRecherche="fr.mate.sample.recherche.events.*"
+				xmlns:eventsRemboursement="fr.mate.sample.remboursement.events.*"
 				xmlns:app="fr.mate.sample.application.*"
 				currentState="{ApplicationStates.RECHERCHE}">
 
 	<mx:Script>
 		<![CDATA[
-		import fr.mate.sample.application.*;
+			import fr.mate.sample.application.*;
 		]]>
 	</mx:Script>
-				
+
 	<mx:Tile direction="horizontal"
 			 horizontalGap="10"
 			 paddingTop="10"
-			 paddingBottom="10" 
+			 paddingBottom="10"
 			 width="100%">
 		<mx:Button label="Recherche"
 				   click="{dispatchEvent(new ApplicationNavigationEvent(ApplicationStates.RECHERCHE));}" />
@@ -39,22 +40,23 @@
 				<viewsRecherche:ListePersonneUI />
 			</mx:AddChild>
 		</mx:State>
-		
+
 		<mx:State name="{ApplicationStates.LISTE_CONTRATS}">
 			<mx:AddChild>
 				<viewsRecherche:ListeContratUI />
 			</mx:AddChild>
 		</mx:State>
 
-		<!--<mx:State name="{fr.mate.sample.ApplicationStates.SYNTHESE}">
+		<mx:State name="{ApplicationStates.SYNTHESE}">
 			<mx:AddChild>
-				<viewsSynthese:synthese />
+				<viewsRemboursement:SyntheseUI />
 			</mx:AddChild>
-		</mx:State>-->
+		</mx:State>
 	</mx:states>
 
 	<!-- Event Maps -->
 	<app:NavigationMap />
-	
+
 	<eventsRecherche:RechercheEventMap dispatcher="{this}" />
+	<eventsRemboursement:RemboursementEventMap dispatcher="{this}" />
 </mx:Application>

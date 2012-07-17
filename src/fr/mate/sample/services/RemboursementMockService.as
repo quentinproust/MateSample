@@ -21,13 +21,13 @@ package fr.mate.sample.services
 		{
 			remboursements[51005] = new ArrayCollection();
 			// 2012
-			remboursements[51005].addItemAt(new RemboursementVo("Accident de vélo", 33.3, new Date(2012, 06, 10), null, EtatRemboursement.EN_ATTENTE));
-			remboursements[51005].addItemAt(new RemboursementVo("Rendez-vous médecin", 25.20, new Date(2012, 02, 20), new Date(2012, 03, 01), EtatRemboursement.REMBOURSER));
+			remboursements[51005].addItem(new RemboursementVo(1, "Accident de vélo", 33.3, new Date(2012, 06, 10), null, EtatRemboursement.EN_ATTENTE));
+			remboursements[51005].addItem(new RemboursementVo(2, "Rendez-vous médecin", 25.20, new Date(2012, 02, 20), new Date(2012, 03, 01), EtatRemboursement.REMBOURSER));
 			// 2011
-			remboursements[51005].addItemAt(new RemboursementVo("Rendez-vous médecin - correction", 25.20, new Date(2011, 03, 23), new Date(2011, 04, 01), EtatRemboursement.REMBOURSER));
-			remboursements[51005].addItemAt(new RemboursementVo("Rendez-vous médecin", 2520, new Date(2011, 03, 10), null, EtatRemboursement.INVALIDE));
-			remboursements[51005].addItemAt(new RemboursementVo("Dentiste", 45.15, new Date(2011, 02, 01), new Date(2011, 03, 01), EtatRemboursement.REMBOURSER));
-			remboursements[51005].addItemAt(new RemboursementVo("Ophtalmologiste", 31.20, new Date(2011, 02, 21), new Date(2011, 03, 01), EtatRemboursement.REMBOURSER));
+			remboursements[51005].addItem(new RemboursementVo(3, "Rendez-vous médecin - correction", 25.20, new Date(2011, 03, 23), new Date(2011, 04, 01), EtatRemboursement.REMBOURSER));
+			remboursements[51005].addItem(new RemboursementVo(4, "Rendez-vous médecin", 2520, new Date(2011, 03, 10), null, EtatRemboursement.INVALIDE));
+			remboursements[51005].addItem(new RemboursementVo(5, "Dentiste", 45.15, new Date(2011, 02, 01), new Date(2011, 03, 01), EtatRemboursement.REMBOURSER));
+			remboursements[51005].addItem(new RemboursementVo(6, "Ophtalmologiste", 31.20, new Date(2011, 02, 21), new Date(2011, 03, 01), EtatRemboursement.REMBOURSER));
 		}
 		
 		/**
@@ -47,7 +47,7 @@ package fr.mate.sample.services
 			{
 				if (rmb.dateReceptionDemande.fullYear == criteres.annee)
 				{
-					remboursementsTrouves.addItemAt(rmb);
+					remboursementsTrouves.addItem(rmb);
 				}
 			}
 			

@@ -6,6 +6,9 @@ package fr.mate.sample.model
 	 */
 	public class RemboursementVo
 	{
+		/** Identifiant */
+		public var id:Number;
+		
 		/** Motif du remboursement. */
 		public var motif:String;
 		
@@ -27,8 +30,9 @@ package fr.mate.sample.model
 		 * @param	montant Montant du remboursement.
 		 * @param	dateRemboursement Date du remboursement.
 		 */
-		public function RemboursementVo(motif:String = null, montant:Number = 0, dateReceptionDemande:Date = null, dateRemboursement:Date = null, etat:String = null)
+		public function RemboursementVo(id:Number, motif:String = null, montant:Number = 0, dateReceptionDemande:Date = null, dateRemboursement:Date = null, etat:String = null)
 		{
+			this.id = id;
 			this.motif = motif;
 			this.montant = montant;
 			this.dateRemboursement = dateRemboursement;

@@ -25,7 +25,7 @@ package fr.mate.sample.recherche.events
 		
 		public override function clone():Event 
 		{ 
-			return new RechercheEvent(this._contrat);
+			return new SelectionContratEvent(this._contrat);
 		} 
 		
 		public override function toString():String 

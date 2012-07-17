@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LocalEventMap xmlns:mx="http://www.adobe.com/2006/mxml"
+			   xmlns="http://mate.asfusion.com/"
+			   xmlns:services="fr.mate.sample.services.*">
+
+	<mx:Script>
+		<![CDATA[
+			import fr.mate.sample.remboursement.manager.*;
+			import fr.mate.sample.remboursement.model.*;
+			import fr.mate.sample.remboursement.views.*;
+			import fr.mate.sample.recherche.events.*;
+			import mx.events.*;
+		]]>
+	</mx:Script>
+
+	<!-- Debugger -->
+	<!-- remove during production. This tag can be placed here or in your main application -->
+
+	<Debugger level="{Debugger.ALL}" />
+
+	<services:Services id="services" />
+
+	<!-- Intialisation -->
+	<EventHandlers type="{FlexEvent.PREINITIALIZE}">
+		<!-- Init du manager -->
+		<ObjectBuilder generator="{RemboursementManager}"
+					   constructorArguments="{scope.dispatcher}" />
+
+		<!-- Init des views models -->
+		<ObjectBuilder generator="{SyntheseVM}"
+					   constructorArguments="{scope.dispatcher}" />
+	</EventHandlers>
+
+	<!-- Sélection d'un contrat (normalement depuis la recherche). -->
+	<EventHandlers type="{SelectionContratEvent.EVENT}">
+		<MethodInvoker generator="{RemboursementManager}"
+					   method="selectionContrat"
+					   arguments="{event.contrat}" />
+	</EventHandlers>
+
+	<!-- Recherche des remboursements -->
+	<EventHandlers type="{RemboursementEvent.GET}">
+		<RemoteObjectInvoker instance="{services.remboursementService}"
+							 method="rechercher"
+							 arguments="{event.informationsRecherche}">
+			<resultHandlers>
+				<MethodInvoker generator="{RemboursementManager}"
+							   method="chargerRemboursements"
+							   arguments="{resultObject}" />
+			</resultHandlers>
+		</RemoteObjectInvoker>
+	</EventHandlers>
+
+	<!-- Injectors -->
+	<Injectors target="{SyntheseVM}">
+		<PropertyInjector targetKey="contratSelectionne"
+						  source="{RemboursementManager}"
+						  sourceKey="contratSelectionne" />
+
+		<PropertyInjector targetKey="remboursements"
+						  source="{RemboursementManager}"
+						  sourceKey="remboursements" />
+	</Injectors>
+
+	<Injectors target="{SyntheseUI}">
+		<PropertyInjector targetKey="viewModel"
+						  source="{SyntheseVM}" />
+	</Injectors>
+
+</LocalEventMap>
