@@ -4,6 +4,7 @@ package fr.mate.sample.remboursement.manager
 	import fr.mate.sample.application.*;
 	import fr.mate.sample.model.ContratVo;
 	import fr.mate.sample.recherche.events.SelectionPersonneEvent;
+	import fr.mate.sample.remboursement.events.VoirRemboursementEnAttenteEvent;
 	import mx.controls.Alert;
 	import mx.collections.ArrayCollection;
 	
@@ -21,6 +22,9 @@ package fr.mate.sample.remboursement.manager
 		public var remboursements:ArrayCollection;
 		
 		[Bindable]
+		public var remboursementsEnAttente:ArrayCollection;
+		
+		[Bindable]
 		public var contratSelectionne:ContratVo;
 		
 		/**
@@ -33,19 +37,36 @@ package fr.mate.sample.remboursement.manager
 		}
 		
 		/**
+		 * Gérer les évènements de navigation.
+		 * @param	event Event.
+		 */
+		public function gererEventNavigation(event:ApplicationNavigationEvent):void
+		{
+			if ((event.etat == ApplicationStates.VALIDATION || event.etat == ApplicationStates.SYNTHESE) && contratSelectionne == null)
+			{
+				_dispatcher.dispatchEvent(new ApplicationNavigationEvent(ApplicationStates.RECHERCHE));
+				Alert.show("Aucun contrat n'a été sélectionné. \nFaite une recherche pour sélectionner un contrat");
+				return;
+			}
+			
+			if (event.etat == ApplicationStates.VALIDATION)
+			{
+				_dispatcher.dispatchEvent(new VoirRemboursementEnAttenteEvent(contratSelectionne.id));
+			}
+		}
+		
+		/**
 		 * Sélection d'un contrat.On redirige vers la synthèse des informations.
 		 * @param	contrat Personne qui a été sélectionnée.
 		 */
 		public function selectionContrat(contrat:ContratVo):void
 		{
 			contratSelectionne = contrat;
-			_dispatcher.dispatchEvent(new ApplicationNavigationEvent(ApplicationStates.SYNTHESE));
 		}
 		
 		/**
 		 * Chargement des remboursements dans le manager.
-		 * Les remboursements sont affichés dans des onglets. Il n'y a donc aucune redirection à effectuer.
-		 * @param	remboursements Remboursements trouvés pour le contrat et l'année demandée.
+		 * @param	remboursements Remboursements en attente trouvés pour le contrat.
 		 */
 		public function chargerRemboursements(remboursements:ArrayCollection):void
 		{
@@ -53,11 +74,29 @@ package fr.mate.sample.remboursement.manager
 			
 			if (remboursements == null || remboursements.length <= 0)
 			{
-				Alert.show("Aucun remboursement n'a été trouvé.");
+				Alert.show("Aucun remboursement en attente n'a été trouvé.");
 			}
 			else
 			{
 				this.remboursements = remboursements;
+			}
+		}
+		
+		/**
+		 * Chargement des remboursements en attente dans le manager.
+		 * @param	remboursements Remboursements en attente trouvés pour le contrat.
+		 */
+		public function chargerRemboursementsEnAttente(remboursements:ArrayCollection):void
+		{
+			trace("Nombre de remboursements en attente trouvés : " + remboursements.length);
+			
+			if (remboursements == null || remboursements.length <= 0)
+			{
+				Alert.show("Aucun remboursement en attente n'a été trouvé.");
+			}
+			else
+			{
+				this.remboursementsEnAttente = remboursements;
 			}
 		}
 	}

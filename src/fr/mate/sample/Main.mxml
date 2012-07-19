@@ -22,10 +22,8 @@
 				   click="{dispatchEvent(new ApplicationNavigationEvent(ApplicationStates.RECHERCHE));}" />
 		<mx:Button label="Synthese"
 				   click="{dispatchEvent(new ApplicationNavigationEvent(ApplicationStates.SYNTHESE));}" />
-		<!--<mx:Button label="Edition"
-			 height="50"
-			 width="75"
-			 click="clickHandler(event);" />-->
+		<mx:Button label="Validation de remboursement"
+				   click="{dispatchEvent(new ApplicationNavigationEvent(ApplicationStates.VALIDATION));}" />
 	</mx:Tile>
 
 	<mx:states>
@@ -50,6 +48,12 @@
 		<mx:State name="{ApplicationStates.SYNTHESE}">
 			<mx:AddChild>
 				<viewsRemboursement:SyntheseUI />
+			</mx:AddChild>
+		</mx:State>
+
+		<mx:State name="{ApplicationStates.VALIDATION}">
+			<mx:AddChild>
+				<viewsRemboursement:ValidationRemboursementUI />
 			</mx:AddChild>
 		</mx:State>
 	</mx:states>

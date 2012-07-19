@@ -11,9 +11,9 @@ package fr.mate.sample.application
 		public static const LISTE_PERSONNES:String = "EtatListeDesPersonnes";
 		public static const LISTE_CONTRATS:String = "EtatListeDesContrats";
 		public static const SYNTHESE:String = "EtatSynthese";
-		public static const EDITION:String = "EtatEdition";
+		public static const VALIDATION:String = "EtatValidation";
 	
-		public static const etats:Array = new Array(RECHERCHE, LISTE_PERSONNES, LISTE_CONTRATS, SYNTHESE, EDITION);
+		public static const etats:Array = new Array(RECHERCHE, LISTE_PERSONNES, LISTE_CONTRATS, SYNTHESE, VALIDATION);
 		
 		public static function isEtatExistant(etat:String):Boolean {
 			var etatExistant:Boolean = false;

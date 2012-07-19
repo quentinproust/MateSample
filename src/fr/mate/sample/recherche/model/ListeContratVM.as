@@ -2,9 +2,9 @@ package fr.mate.sample.recherche.model
 {
 	import flash.events.*;
 	import fr.mate.core.*;
+	import fr.mate.sample.application.*;
 	import fr.mate.sample.model.*;
-	import fr.mate.sample.recherche.events.SelectionContratEvent;
-	import fr.mate.sample.recherche.events.SelectionPersonneEvent;
+	import fr.mate.sample.recherche.events.*;
 	import mx.collections.*;
 	import mx.utils.*;
 	
@@ -55,6 +55,7 @@ package fr.mate.sample.recherche.model
 		public function selectionnerContrat(contrat:ContratVo):void
 		{
 			dispatcher.dispatchEvent(new SelectionContratEvent(contrat));
+			dispatcher.dispatchEvent(new ApplicationNavigationEvent(ApplicationStates.SYNTHESE));
 		}
 	}
 

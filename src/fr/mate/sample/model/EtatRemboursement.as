@@ -11,6 +11,8 @@ package fr.mate.sample.model
 		
 		public static const EN_ATTENTE:String = "En attente";
 		
+		public static const A_REMBOURSER:String = "A rembourser";
+		
 		public static const INVALIDE:String = "Invalide";
 	
 	}

@@ -33,7 +33,7 @@ package fr.mate.sample.services
 		/**
 		 * Effectue une recherche dans le jeu de données de test.
 		 * @param	criteres Criteres de recherche.
-		 * @return Liste de personnes trouvées.
+		 * @return Liste de remboursements trouvés.
 		 */
 		public function rechercher(criteres:CritereRemboursement):ArrayCollection
 		{
@@ -46,6 +46,29 @@ package fr.mate.sample.services
 			for each (var rmb:RemboursementVo in remboursementsContrat)
 			{
 				if (rmb.dateReceptionDemande.fullYear == criteres.annee)
+				{
+					remboursementsTrouves.addItem(rmb);
+				}
+			}
+			
+			return remboursementsTrouves;
+		}
+		
+		/**
+		 * Récupération des remboursements en attente de validation pour un contrat.
+		 * @param	numeroContrat Numéro du contrat.
+		 * @return Liste de remboursements trouvés.
+		 */
+		public function rechercherInvalides(numeroContrat:Number):ArrayCollection {
+			var remboursementsTrouves:ArrayCollection = new ArrayCollection();
+			
+			// On récupère les remboursements du contrat.
+			var remboursementsContrat:ArrayCollection = this.remboursements[numeroContrat];
+			
+			// Pour les remboursement du contrat, on ne récupère que les remboursements de l'année demandée.
+			for each (var rmb:RemboursementVo in remboursementsContrat)
+			{
+				if (rmb.etatRemboursement == EtatRemboursement.EN_ATTENTE)
 				{
 					remboursementsTrouves.addItem(rmb);
 				}
