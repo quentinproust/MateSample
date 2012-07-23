@@ -5,6 +5,7 @@ package fr.mate.sample.remboursement.model
 	import fr.mate.sample.model.*;
 	import fr.mate.sample.recherche.events.*;
 	import fr.mate.sample.recherche.model.CritereRecherche;
+	import fr.mate.sample.remboursement.events.ChangerEtatRemboursementEvent;
 	import fr.mate.sample.remboursement.events.RemboursementEvent;
 	import mx.charts.chartClasses.NumericAxis;
 	import mx.collections.*;
@@ -54,6 +55,21 @@ package fr.mate.sample.remboursement.model
 			super(dispatcher);
 		}
 		
+		/**
+		 * Valider le remboursement. Il passera à l'état EtatRemboursement.A_REMBOURSER.
+		 * @param	remboursement Remboursement à valider.
+		 */
+		public function validerRemboursement(remboursement:RemboursementVo) :void {
+			dispatcher.dispatchEvent(new ChangerEtatRemboursementEvent(remboursement, EtatRemboursement.A_REMBOURSER));
+		}
+		
+		/**
+		 * Refuser le remboursement. Il passera à l'état EtatRemboursement.INVALIDE.
+		 * @param	remboursement Remboursement à refuser.
+		 */
+		public function refuserRemboursement(remboursement:RemboursementVo) :void {
+			dispatcher.dispatchEvent(new ChangerEtatRemboursementEvent(remboursement, EtatRemboursement.INVALIDE));
+		}
 	}
 
 }

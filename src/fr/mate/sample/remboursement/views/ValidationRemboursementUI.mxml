@@ -19,6 +19,19 @@
 
 	<ContratInfo contrat="{viewModel.contratSelectionne}" />
 
-	<GrilleRemboursement dataProvider="{viewModel.remboursements}" />
+	<GrilleRemboursement dataProvider="{viewModel.remboursements}" id="grilleRemboursement" />
 
+	<mx:Tile direction="horizontal"
+			 horizontalGap="10"
+			 paddingTop="10"
+			 paddingBottom="10"
+			 width="100%">
+		<mx:Button label="Valider"
+				   enabled="{grilleRemboursement.selectedItem != null}"
+				   click="{viewModel.validerRemboursement(RemboursementVo(grilleRemboursement.selectedItem));}" />
+				   
+		<mx:Button label="Refuser"
+				   enabled="{grilleRemboursement.selectedItem != null}"
+				   click="{viewModel.refuserRemboursement(RemboursementVo(grilleRemboursement.selectedItem));}" />
+	</mx:Tile>
 </mx:VBox>

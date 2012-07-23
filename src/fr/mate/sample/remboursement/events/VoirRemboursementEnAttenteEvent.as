@@ -30,7 +30,7 @@ package fr.mate.sample.remboursement.events
 		
 		public override function toString():String
 		{
-			return formatToString("RemboursementEvent", "_numeroContrat");
+			return formatToString("VoirRemboursementEnAttenteEvent", "_numeroContrat");
 		}
 	
 	}

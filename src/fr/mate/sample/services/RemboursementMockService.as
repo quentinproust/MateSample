@@ -76,6 +76,15 @@ package fr.mate.sample.services
 			
 			return remboursementsTrouves;
 		}
+		
+		/**
+		 * Modification de l'état d'un remboursement.
+		 * @param	remboursement Remboursement.
+		 * @param	etat Nouvel état du remboursement.
+		 */
+		public function changerStatutRemboursement(remboursement:RemboursementVo, etat:String) :void {
+			remboursement.etatRemboursement = etat;
+		}
 	}
 
 }

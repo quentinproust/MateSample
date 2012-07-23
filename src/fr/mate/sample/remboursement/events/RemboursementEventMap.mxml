@@ -11,6 +11,8 @@
 			import fr.mate.sample.recherche.events.*;
 			import fr.mate.sample.application.*;
 			import mx.events.*;
+			import mx.collections.ArrayCollection;
+			import mx.utils.*;
 		]]>
 	</mx:Script>
 
@@ -43,6 +45,9 @@
 
 	<!-- Recherche des remboursements -->
 	<EventHandlers type="{RemboursementEvent.GET}">
+		<DataCopier destination="{RemboursementManager}"
+							destinationKey="remboursements"
+							source="{new ArrayCollection()}" />
 		<RemoteObjectInvoker instance="{services.remboursementService}"
 							 method="rechercher"
 							 arguments="{event.informationsRecherche}">
@@ -63,6 +68,9 @@
 	</EventHandlers>
 
 	<EventHandlers type="{VoirRemboursementEnAttenteEvent.GET}">
+		<DataCopier destination="{RemboursementManager}"
+							destinationKey="remboursementsEnAttente"
+							source="{new ArrayCollection()}" />
 		<RemoteObjectInvoker instance="{services.remboursementService}"
 							 method="rechercherInvalides"
 							 arguments="{event.numeroContrat}">
@@ -74,6 +82,24 @@
 		</RemoteObjectInvoker>
 	</EventHandlers>
 
+	<!-- Modifier l'état des remboursements -->
+	<EventHandlers type="{ChangerEtatRemboursementEvent.GET}">
+		<RemoteObjectInvoker instance="{services.remboursementService}"
+							 method="changerStatutRemboursement"
+							 arguments="{[event.remboursement, event.nouvelEtat]}">
+			<resultHandlers>
+				<DataCopier destination="{data}"
+							destinationKey="contrat"
+							source="{RemboursementManager}"
+							sourceKey="contratSelectionne" />
+							
+				<EventAnnouncer generator="{VoirRemboursementEnAttenteEvent}"
+								type="{VoirRemboursementEnAttenteEvent.GET}"
+								constructorArguments="{data.contrat.id}" />
+			</resultHandlers>
+		</RemoteObjectInvoker>
+	</EventHandlers>
+
 	<!-- Injectors -->
 	<Injectors targets="{[SyntheseVM, ValidationRemboursementVM]}">
 		<PropertyInjector targetKey="contratSelectionne"
@@ -81,10 +107,14 @@
 						  sourceKey="contratSelectionne" />
 	</Injectors>
 
-	<Injectors target="{SyntheseVM}">
+	<Injectors target="{SyntheseVM}" debug="true">
 		<PropertyInjector targetKey="remboursements"
 						  source="{RemboursementManager}"
 						  sourceKey="remboursements" />
+						  
+		<PropertyInjector targetKey="annees"
+						  source="{RemboursementManager}"
+						  sourceKey="anneesCouvertureContrat" />
 	</Injectors>
 
 	<Injectors target="{ValidationRemboursementVM}">

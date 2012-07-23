@@ -4,7 +4,9 @@ package fr.mate.sample.remboursement.manager
 	import fr.mate.sample.application.*;
 	import fr.mate.sample.model.ContratVo;
 	import fr.mate.sample.recherche.events.SelectionPersonneEvent;
+	import fr.mate.sample.remboursement.events.RemboursementEvent;
 	import fr.mate.sample.remboursement.events.VoirRemboursementEnAttenteEvent;
+	import fr.mate.sample.remboursement.model.CritereRemboursement;
 	import mx.controls.Alert;
 	import mx.collections.ArrayCollection;
 	
@@ -17,6 +19,10 @@ package fr.mate.sample.remboursement.manager
 		 * Dispatcher pour envoyer des evenements vers la map.
 		 */
 		private var _dispatcher:IEventDispatcher;
+		
+		/** Années de couverture du contrat durant lesquels on peut voir des remboursements. */
+		[Bindable]
+		public var anneesCouvertureContrat:ArrayCollection;
 		
 		[Bindable]
 		public var remboursements:ArrayCollection;
@@ -53,6 +59,11 @@ package fr.mate.sample.remboursement.manager
 			{
 				_dispatcher.dispatchEvent(new VoirRemboursementEnAttenteEvent(contratSelectionne.id));
 			}
+			
+			if (event.etat == ApplicationStates.SYNTHESE)
+			{
+				_dispatcher.dispatchEvent(new RemboursementEvent(new CritereRemboursement(contratSelectionne.id, anneesCouvertureContrat.getItemAt(0) as Number)));
+			}
 		}
 		
 		/**
@@ -62,6 +73,7 @@ package fr.mate.sample.remboursement.manager
 		public function selectionContrat(contrat:ContratVo):void
 		{
 			contratSelectionne = contrat;
+			creerAnnees();
 		}
 		
 		/**
@@ -74,6 +86,7 @@ package fr.mate.sample.remboursement.manager
 			
 			if (remboursements == null || remboursements.length <= 0)
 			{
+				this.remboursements = new ArrayCollection();
 				Alert.show("Aucun remboursement en attente n'a été trouvé.");
 			}
 			else
@@ -92,12 +105,40 @@ package fr.mate.sample.remboursement.manager
 			
 			if (remboursements == null || remboursements.length <= 0)
 			{
+				this.remboursementsEnAttente = new ArrayCollection();
 				Alert.show("Aucun remboursement en attente n'a été trouvé.");
 			}
 			else
 			{
 				this.remboursementsEnAttente = remboursements;
 			}
+		}
+		
+		/**
+		 * Création des années en fonction du contrat sélectionné.
+		 */
+		private function creerAnnees():void
+		{
+			var anneesCrees:ArrayCollection = new ArrayCollection();
+			
+			if (contratSelectionne != null)
+			{
+				var anneeDebut:Number = contratSelectionne.dateOuverture.fullYear;
+				var anneeFin:Number = contratSelectionne.dateCloture == null ? new Date().fullYear : contratSelectionne.dateCloture.fullYear;
+				
+				trace("Creation des annees de ", anneeDebut, " à ", anneeFin);
+				
+				// Création des années
+				for (var i:Number = anneeDebut; i <= anneeFin; i++)
+				{
+					anneesCrees.addItemAt(i, 0);
+				}
+				
+				// Demande des remboursements de l'années de fin
+				_dispatcher.dispatchEvent(new RemboursementEvent(new CritereRemboursement(contratSelectionne.id, anneeFin)));
+			}
+			
+			anneesCouvertureContrat = anneesCrees;
 		}
 	}
 
