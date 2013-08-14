@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LocalEventMap xmlns:mx="http://www.adobe.com/2006/mxml"
+			   xmlns="http://mate.asfusion.com/"
+			   xmlns:services="fr.mate.sample.services.*">
+
+	<mx:Script>
+		<![CDATA[
+			import fr.mate.sample.remboursement.manager.*;
+			import fr.mate.sample.remboursement.model.*;
+			import fr.mate.sample.remboursement.views.*;
+			import fr.mate.sample.recherche.events.*;
+			import fr.mate.sample.application.*;
+			import mx.events.*;
+			import mx.collections.ArrayCollection;
+			import mx.utils.*;
+		]]>
+	</mx:Script>
+
+	<!-- Debugger -->
+	<!-- remove during production. This tag can be placed here or in your main application -->
+
+	<Debugger level="{Debugger.ALL}" />
+
+	<services:Services id="services" />
+
+	<!-- Intialisation -->
+	<EventHandlers type="{FlexEvent.PREINITIALIZE}">
+		<!-- Init du manager -->
+		<ObjectBuilder generator="{RemboursementManager}"
+					   constructorArguments="{scope.dispatcher}" />
+
+		<!-- Init des views models -->
+		<ObjectBuilder generator="{SyntheseVM}"
+					   constructorArguments="{scope.dispatcher}" />
+		<ObjectBuilder generator="{ValidationRemboursementVM}"
+					   constructorArguments="{scope.dispatcher}" />
+	</EventHandlers>
+
+	<!-- Sélection d'un contrat (normalement depuis la recherche). -->
+	<EventHandlers type="{SelectionContratEvent.EVENT}">
+		<MethodInvoker generator="{RemboursementManager}"
+					   method="selectionContrat"
+					   arguments="{event.contrat}" />
+	</EventHandlers>
+
+	<!-- Recherche des remboursements -->
+	<EventHandlers type="{RemboursementEvent.GET}">
+		<DataCopier destination="{RemboursementManager}"
+							destinationKey="remboursements"
+							source="{new ArrayCollection()}" />
+		<RemoteObjectInvoker instance="{services.remboursementService}"
+							 method="rechercher"
+							 arguments="{event.informationsRecherche}">
+			<resultHandlers>
+				<MethodInvoker generator="{RemboursementManager}"
+							   method="chargerRemboursements"
+							   arguments="{resultObject}" />
+			</resultHandlers>
+		</RemoteObjectInvoker>
+	</EventHandlers>
+
+	<!-- Recherche des remboursements en attente -->
+	<EventHandlers type="{ApplicationNavigationEvent.EVENT}"
+				   dispatcherType="global">
+		<MethodInvoker generator="{RemboursementManager}"
+					   method="gererEventNavigation"
+					   arguments="{event}" />
+	</EventHandlers>
+
+	<EventHandlers type="{VoirRemboursementEnAttenteEvent.GET}">
+		<DataCopier destination="{RemboursementManager}"
+							destinationKey="remboursementsEnAttente"
+							source="{new ArrayCollection()}" />
+		<RemoteObjectInvoker instance="{services.remboursementService}"
+							 method="rechercherInvalides"
+							 arguments="{event.numeroContrat}">
+			<resultHandlers>
+				<MethodInvoker generator="{RemboursementManager}"
+							   method="chargerRemboursementsEnAttente"
+							   arguments="{resultObject}" />
+			</resultHandlers>
+		</RemoteObjectInvoker>
+	</EventHandlers>
+
+	<!-- Modifier l'état des remboursements -->
+	<EventHandlers type="{ChangerEtatRemboursementEvent.GET}">
+		<RemoteObjectInvoker instance="{services.remboursementService}"
+							 method="changerStatutRemboursement"
+							 arguments="{[event.remboursement, event.nouvelEtat]}">
+			<resultHandlers>
+				<DataCopier destination="{data}"
+							destinationKey="contrat"
+							source="{RemboursementManager}"
+							sourceKey="contratSelectionne" />
+							
+				<EventAnnouncer generator="{VoirRemboursementEnAttenteEvent}"
+								type="{VoirRemboursementEnAttenteEvent.GET}"
+								constructorArguments="{data.contrat.id}" />
+			</resultHandlers>
+		</RemoteObjectInvoker>
+	</EventHandlers>
+
+	<!-- Injectors -->
+	<Injectors targets="{[SyntheseVM, ValidationRemboursementVM]}">
+		<PropertyInjector targetKey="contratSelectionne"
+						  source="{RemboursementManager}"
+						  sourceKey="contratSelectionne" />
+	</Injectors>
+
+	<Injectors target="{SyntheseVM}" debug="true">
+		<PropertyInjector targetKey="remboursements"
+						  source="{RemboursementManager}"
+						  sourceKey="remboursements" />
+						  
+		<PropertyInjector targetKey="annees"
+						  source="{RemboursementManager}"
+						  sourceKey="anneesCouvertureContrat" />
+	</Injectors>
+
+	<Injectors target="{ValidationRemboursementVM}">
+		<PropertyInjector targetKey="remboursements"
+						  source="{RemboursementManager}"
+						  sourceKey="remboursementsEnAttente" />
+	</Injectors>
+
+	<Injectors target="{SyntheseUI}">
+		<PropertyInjector targetKey="viewModel"
+						  source="{SyntheseVM}" />
+	</Injectors>
+
+	<Injectors target="{ValidationRemboursementUI}">
+		<PropertyInjector targetKey="viewModel"
+						  source="{ValidationRemboursementVM}" />
+	</Injectors>
+
+</LocalEventMap>

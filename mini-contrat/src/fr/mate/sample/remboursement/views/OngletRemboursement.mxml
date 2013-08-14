@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+		 xmlns="fr.mate.sample.remboursement.views.*"
+		 width="100%">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.*;
+			import fr.mate.core.*;
+			import fr.mate.sample.remboursement.model.*;
+			
+			[Bindable]
+			public var viewModel:SyntheseVM;
+		]]>
+	</mx:Script>
+
+	<GrilleRemboursement dataProvider="{viewModel.remboursements}" />
+
+</mx:HBox>
