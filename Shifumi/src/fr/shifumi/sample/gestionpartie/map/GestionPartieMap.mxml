@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LocalEventMap xmlns:mx="http://www.adobe.com/2006/mxml"
+			   xmlns="http://mate.asfusion.com/"
+			   xmlns:services="fr.shifumi.sample.services.*">
+
+	<mx:Script>
+		<![CDATA[
+			import fr.shifumi.sample.gestionpartie.manager.GestionPartieManager;
+			import mx.events.*;
+		]]>
+	</mx:Script>
+
+	<!-- Debugger -->
+	<!-- remove during production. This tag can be placed here or in your main application -->
+
+	<Debugger level="{Debugger.ALL}" />
+
+	<services:Services id="services" />
+
+	<!-- Intialisation -->
+	<EventHandlers type="{FlexEvent.PREINITIALIZE}">
+		<!-- Init du manager -->
+		<ObjectBuilder generator="{GestionPartieManager}"
+					   constructorArguments="{scope.dispatcher}" />
+
+		<!-- Init des views models 
+		<ObjectBuilder generator="{RechercheVM}"
+					   constructorArguments="{scope.dispatcher}" />-->
+	</EventHandlers>
+
+	<!-- Recherche de personnes ou de contrats 
+	<EventHandlers type="{RechercheEvent.GET}">
+		<RemoteObjectInvoker instance="{services.rechercheService}"
+							 method="rechercher"
+							 arguments="{event.informationsRecherche}">
+			<resultHandlers>
+				<MethodInvoker generator="{RechercheManager}"
+							   method="chargerResultatRecherche"
+							   arguments="{resultObject}" />
+			</resultHandlers>
+		</RemoteObjectInvoker>
+	</EventHandlers>-->
+
+	<!-- Injectors 
+	<Injectors target="{ListePersonneVM}">
+		<PropertyInjector targetKey="resultatRecherche"
+						  source="{RechercheManager}"
+						  sourceKey="resultatRecherche" />
+	</Injectors>
+
+	<Injectors target="{ListeContratVM}">
+		<PropertyInjector targetKey="personneSelectionnee"
+						  source="{RechercheManager}"
+						  sourceKey="personneSelectionnee" />
+	</Injectors>
+
+	<Injectors target="{RechercheUI}">
+		<PropertyInjector targetKey="viewModel"
+						  source="{RechercheVM}" />
+	</Injectors>
+
+	<Injectors target="{ListePersonneUI}">
+		<PropertyInjector targetKey="viewModel"
+						  source="{ListePersonneVM}" />
+	</Injectors>
+
+	<Injectors target="{ListeContratUI}">
+		<PropertyInjector targetKey="viewModel"
+						  source="{ListeContratVM}" />
+	</Injectors>
+-->
+</LocalEventMap>

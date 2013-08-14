@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:gestionPartiesMap="fr.shifumi.sample.gestionpartie.map.*"
+				xmlns:gestionPartiesViews="fr.shifumi.sample.gestionpartie.views.*"
+				xmlns:app="fr.shifumi.sample.application.*"
+				currentState="{ApplicationStates.JOUER}">
+
+	<mx:Script>
+		<![CDATA[
+			import fr.shifumi.sample.application.*;
+		]]>
+	</mx:Script>
+
+	<mx:Tile direction="horizontal"
+			 horizontalGap="10"
+			 paddingTop="10"
+			 paddingBottom="10"
+			 width="100%">
+		<mx:Button label="Jouer"
+				   click="{dispatchEvent(new ApplicationNavigationEvent(ApplicationStates.JOUER));}" />
+		<mx:Button label="Voir les résultats"
+				   click="{dispatchEvent(new ApplicationNavigationEvent(ApplicationStates.RESULTATS));}" />
+	</mx:Tile>
+
+	<mx:states>
+		<mx:State name="{ApplicationStates.JOUER}">
+			<mx:AddChild>
+				<gestionPartiesViews:JouerPartieUI />
+			</mx:AddChild>
+		</mx:State>
+
+		<mx:State name="{ApplicationStates.RESULTATS}">
+			<mx:AddChild>
+				<gestionPartiesViews:ListePartiesUI />
+			</mx:AddChild>
+		</mx:State>
+	</mx:states>
+
+	<!-- Event Maps -->
+	<app:NavigationMap />
+
+	<gestionPartiesMap:GestionPartieMap dispatcher="{this}" />
+</mx:Application>

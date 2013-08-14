@@ -1,0 +1,14 @@
+# Build and Release Folders
+bin/
+bin-debug/
+bin-release/
+
+obj/
+lib/
+*.swc
+
+# Project property files
+.actionScriptProperties
+.flexProperties
+.settings/
+.project

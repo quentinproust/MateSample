@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
+		 xmlns:events="fr.shifumi.sample.gestionpartie.events.*"
+		 xmlns:model="fr.shifumi.sample.gestionpartie.model.*"
+		 xmlns="fr.shifumi.sample.gestionpartie.views.*"
+		 xmlns:components="fr.shifumi.sample.gestionpartie.views.components.*"
+		 width="100%"
+		 creationComplete="">
+
+	<mx:Script>
+		<![CDATA[
+		import fr.shifumi.sample.model.*;
+		
+		
+		
+		]]>
+	</mx:Script>
+
+	<mx:Label text="Jouer au Shifumi : " fontSize="24" />
+	
+	<mx:Tile width="100%" horizontalGap="10">
+		<components:ShifumiButton choix="{Choix.PIERRE}" width="100" height="100" />
+		<components:ShifumiButton choix="{Choix.FEUILLE}" width="100" height="100" />
+		<components:ShifumiButton choix="{Choix.CISEAUX}" width="100" height="100" />
+	</mx:Tile>
+
+	<mx:HBox>
+		<mx:Button label="Jouer" />
+	</mx:HBox>
+</mx:VBox>
